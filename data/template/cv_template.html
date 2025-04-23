@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ name }}'s CV</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1, h2 { color: #2c3e50; }
+        section { margin-bottom: 20px; }
+        ul { list-style: square; }
+    </style>
+</head>
+<body>
+    <h1>{{ name }}</h1>
+    <p><strong>Email:</strong> {{ email }} | <strong>Phone:</strong> {{ phone }}</p>
+
+    <section>
+        <h2>Professional Summary</h2>
+        <p>{{ summary }}</p>
+    </section>
+
+    <section>
+        <h2>Skills</h2>
+        <ul >
+            {% for skill in skills %}
+                <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section>
+        <h2>Experience</h2>
+        {% for exp in experience %}
+            <p><strong>{{ exp.role }}</strong> - {{ exp.company }} ({{ exp.duration }})<br>
+            {{ exp.description }}</p>
+        {% endfor %}
+    </section>
+
+    <section>
+        <h2>Education</h2>
+        {% for edu in education %}
+            <p><strong>{{ edu.degree }}</strong> - {{ edu.institution }} ({{ edu.year }})</p>
+        {% endfor %}
+    </section>
+</body>
+</html>
