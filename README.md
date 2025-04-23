@@ -17,6 +17,17 @@ Jobseeker Agent is a Python-based application designed to assist job seekers in 
 - `static/`: Contains static files such as sample PDFs.
 - `tests/`: Includes test cases to ensure the application works as expected.
 
+## Agent Description
+
+The `JobSeekerAgentManager` is a specialized agent designed to transform CV data into a structured JSON format. It ensures:
+
+1. **Input Processing**: Extracts and validates CV data with 100% accuracy.
+2. **Structured Transformation**: Formats data according to a predefined JSON schema.
+3. **Quality Assurance**: Validates dates, categorizes skills, and ensures proper formatting of URLs, emails, and phone numbers.
+4. **Enhancement Suggestions**: Recommends skills to acquire, alternative experiences, and phrasing improvements.
+
+The agent is built using the `google.adk` library and operates asynchronously to process user queries efficiently.
+
 ## Getting Started
 
 1. Clone the repository.
