@@ -1,3 +1,4 @@
+# External libraries used in the project
 fastapi
 uvicorn
 pydantic
