@@ -13,9 +13,32 @@ Jobseeker Agent is a Python-based application designed to assist job seekers in 
 ## Project Structure
 
 - `app/`: Contains the core application logic, including agents, models, and utilities.
+  - `main.py`: The entry point of the application, defining FastAPI endpoints.
+  - `agents/`: Contains agent-related logic.
+    - `agent_manager/`: Manages the main job seeker agent.
+      - `agent.py`: Defines the `JobSeekerAgentManager` class.
+      - `tools.py`: Utility functions for the agent manager.
+    - `cv_structure_agent/`: Handles CV structure and formatting.
+      - `agent.py`: Logic for CV structure agent.
+      - `format.json`: JSON schema for CV structure.
+      - `tools.py`: Utility functions for CV structure agent.
+    - `job_matcher_agent/`: Matches CVs with job descriptions.
+      - `agent.py`: Logic for job matcher agent.
+      - `format.json`: JSON schema for job matching.
+      - `tools.py`: Utility functions for job matcher agent.
+  - `models/`: Defines data models using Pydantic.
+    - `models.py`: Contains models like `PersonalInfo`, `ProfessionalExperience`, and `Education`.
+  - `pdf_template/`: Handles PDF generation for CVs.
+    - `classic.py`, `mono_slate.py`, `slate_lite.py`, `vivid_vision.py`: Different CV templates.
+
 - `data/`: Stores fonts, templates, and other resources.
+  - `font/`: Contains font files for PDF generation.
+  - `template/`: Includes HTML templates for CVs.
+
 - `static/`: Contains static files such as sample PDFs.
+
 - `tests/`: Includes test cases to ensure the application works as expected.
+  - `test_cv_builder.py`: Tests for the main application components.
 
 ## Agent Description
 
@@ -42,3 +65,26 @@ The agent is built using the `google.adk` library and operates asynchronously to
 ## License
 
 This project is licensed under the MIT License.
+
+## Testing
+
+The project includes a comprehensive test suite to ensure the functionality of its components. The tests are located in the `tests/` directory and can be run using `pytest`.
+
+### Running Tests
+
+1. Install `pytest` if not already installed:
+   ```bash
+   pip install pytest
+   ```
+
+2. Navigate to the project directory:
+   ```bash
+   cd c:\Users\DMA\source\repos\PythonPtojects\Jobseeker_agent
+   ```
+
+3. Run the tests:
+   ```bash
+   pytest
+   ```
+
+4. View the results in the terminal to identify any issues or confirm that all tests pass successfully.
