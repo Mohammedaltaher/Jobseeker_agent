@@ -6,3 +6,4 @@ fpdf
 pyodbc
 sqlalchemy
 pytest
+litellm

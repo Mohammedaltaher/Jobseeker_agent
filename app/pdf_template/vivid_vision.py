@@ -76,12 +76,14 @@ def generate_cv(data: Dict[str, Any]) -> str:
             pdf.set_font('Montserrat', 'B', 11)
             pdf.cell(100, 6, txt=exp.get('company', ''), ln=0)
             pdf.set_font('Montserrat', 'I', 10)
-            pdf.cell(90, 6, txt=exp.get('duration', ''), ln=True, align='R')
+            duration = exp.get('duration', 'N/A') if exp.get('duration') else 'N/A'
+            pdf.cell(90, 6, txt=duration, ln=True, align='R')
 
             pdf.set_font('Montserrat', 'B', 10)
             pdf.cell(100, 6, txt=exp.get('role', ''), ln=0)
             pdf.set_font('Montserrat', 'I', 10)
-            pdf.cell(90, 6, txt=exp.get('location', ''), ln=True, align='R')
+            location = exp.get('location', 'N/A') if exp.get('location') else 'N/A'
+            pdf.cell(90, 6, txt=location, ln=True, align='R')
 
             if exp.get('tools'):
                 pdf.set_font('Montserrat', '', 9)
@@ -121,7 +123,8 @@ def generate_cv(data: Dict[str, Any]) -> str:
             pdf.set_font('Montserrat', 'B', 10)
             pdf.cell(100, 6, txt=edu.get('degree', ''), ln=0)
             pdf.set_font('Montserrat', 'I', 10)
-            pdf.cell(90, 6, txt=edu.get('year', ''), ln=True, align='R')
+            year = edu.get('year', 'N/A') if edu.get('year') else 'N/A'
+            pdf.cell(90, 6, txt=year, ln=True, align='R')
             pdf.set_font('Montserrat', '', 10)
             pdf.cell(0, 6, txt=f"{edu.get('institution', '')}, {edu.get('location', '')}", ln=True)
             pdf.ln(2)

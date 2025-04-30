@@ -1,3 +1,4 @@
+from os import getenv
 import uuid
 from dotenv import load_dotenv
 from google.adk.agents import Agent
@@ -12,7 +13,7 @@ load_dotenv('.env')
 
 
 def create_job_matcher_agent():
-    model = "gemini-2.0-flash"
+    model = getenv("MODEL_GEMINI_2_0_FLASH")
     job_matcher_agent = Agent(
         name="Job_Matcher_Agent",
         model=model,

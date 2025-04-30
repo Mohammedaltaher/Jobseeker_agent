@@ -1,3 +1,15 @@
+import logging
+
+# Configure logging to filter logs and show only errors
+logging.basicConfig(
+    level=logging.ERROR,  # Set the logging level to ERROR
+    format="%(asctime)s - %(levelname)s - %(message)s",  # Customize the log format
+    datefmt="%Y-%m-%d %H:%M:%S",  # Set the date format
+)
+
+logging.getLogger("fastapi").setLevel(logging.CRITICAL)
+logging.getLogger("starlette").setLevel(logging.CRITICAL)
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import json
@@ -32,7 +44,19 @@ async def build_cv(cv: str, job_description: str, template: str):
         dict: A JSON response containing the result and the path to the generated PDF.
     """
     agent_manager = agent.JobSeekerAgentManager()
-    response = await agent_manager.call_agent(f"cv : {cv} , job_description : {job_description}")
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            response = await agent_manager.call_agent(f"cv : {cv} , job_description : {job_description}")
+            break
+        except Exception as e:
+            error_message = str(e)
+            if "503" in error_message and attempt < max_retries - 1:
+                print(f"Attempt {attempt + 1} failed: {error_message}. Retrying...")
+                continue
+            else:
+                return {"error": "Failed to process the request. Please try again later."}
+            
     cleaned_str = json.loads(response.strip('```json').strip('```').strip())
     
     # Select the appropriate template based on user input

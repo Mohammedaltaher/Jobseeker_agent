@@ -1,3 +1,4 @@
+from os import getenv
 import uuid
 from dotenv import load_dotenv
 from google.adk.agents import Agent
@@ -14,7 +15,7 @@ load_dotenv('.env')
 def create_cv_structured_formatter_agent():
     cv_structured_formatter_agent = Agent(
             name="CV_Structured_Formatter_Agent",
-            model="gemini-2.0-flash",
+            model=getenv("MODEL_GEMINI_2_0_FLASH"),
             description="Agent that formats CVs into structured JSON",
             instruction=get_agent_instruction()
         )

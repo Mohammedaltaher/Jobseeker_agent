@@ -14,10 +14,14 @@ build/
 dist/
 *.egg-info/
 *.eggs/
+*.devcontainer
 
 # PyInstaller
 *.manifest
 *.spec
+*.vscode
+*.vs
+*.github
 
 # Installer logs
 debug.log
@@ -30,6 +34,7 @@ htmlcov/
 *.cover
 *.py,cover
 .hypothesis/
+.pytest_cache/
 
 # Jupyter Notebook
 .ipynb_checkpoints
