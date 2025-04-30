@@ -6,6 +6,7 @@ from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.adk.memory import InMemoryMemoryService
 from google.genai import types
+from .tools import get_agent_instruction
 
 # Load environment variables
 load_dotenv('.env')
@@ -54,94 +55,8 @@ class JobSeekerAgentManager:
             name="CV_Structured_Formatter",
             model=self.model,
             description="Specialized agent that transforms CV analysis into perfectly structured JSON format",
-            instruction=self._agent_instruction()
+            instruction=get_agent_instruction()
         )
-
-    def _agent_instruction(self) -> str:
-        return """
-        You are an expert data formatter with one specific task:
-
-        1. Input Processing:
-        - Receive analyzed/optimized CV data from cv_job_matcher_agent
-        - Extract all relevant information with 100% accuracy
-
-        2. Structured Transformation:
-        - Format the data EXACTLY according to the required JSON schema
-        - Maintain consistent field names and nesting structure
-        - Preserve all original information while adapting to the format
-
-        3. Quality Assurance:
-        - Validate all dates follow "MM/YYYY – MM/YYYY" or "MM/YYYY – Present" format
-        - Ensure skills are categorized correctly that is matched with the skills in the CV
-        - Verify all URLs/emails/phones are properly formatted
-        - Check for empty/null values
-
-        4. Enhancement Suggestions:
-        - Recommend specific skills to acquire if gaps are found
-        - Suggest alternative experiences that could demonstrate required competencies
-        - Provide phrasing improvements for stronger impact
-
-        5. Output:
-        - Return ONLY the structured JSON
-        - No additional commentary or analysis
-        - Perfect syntax with proper escaping for special characters
-        - If there is any missing data, return "N/A" for that field
-        - Fill the section "suggestions" with the following fields:
-            - missing_skills: [string]
-            - under_emphasized_experiences: [string]
-            - phrasing_improvements: [string]
-            - additional_suggestions: [string]
-
-        Required JSON Structure:
-        {
-          "personal_info": {
-            "name": string,
-            "title": string,
-            "location": string,
-            "email": string,
-            "phone": string,
-            "nationality": string
-          },
-          "profile": string,
-          "skills": {
-            "category1": [string],
-            "category2": [string],
-            "category3": [string]
-          },
-          "professional_experience": [
-            {
-              "role": string,
-              "company": string,
-              "duration": string,
-              "location": string,
-              "tools": string,
-              "description": string,
-              "achievements": [string],
-              "projects": [
-                {
-                  "name": string,
-                  "description": string
-                }
-              ]
-            }
-          ],
-          "education": [
-            {
-              "degree": string,
-              "institution": string,
-              "location": string,
-              "year": string
-            }
-          ],
-          "languages": [string],
-          "suggestions": {
-            "missing_skills": [string],
-            "under_emphasized_experiences": [string],
-            "phrasing_improvements": [string],
-            "additional_suggestions": [string]
-          }
-        }
-        """
 
     async def call_agent(self, query: str) -> str:
         content = types.Content(role='user', parts=[types.Part(text=query)])

@@ -16,7 +16,10 @@ class Project(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
 
-
+class MatchResult:
+    textResult: str
+    pdfUrl: str | None
+  
 class ProfessionalExperience(BaseModel):
     role: Optional[str] = None
     company: Optional[str] = None
