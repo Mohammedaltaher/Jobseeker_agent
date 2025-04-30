@@ -1,5 +1,12 @@
 {
     "cSpell.words": [
-        "dotenv"
+        "dotenv",
+        "fastapi",
+        "fpdf",
+        "pydantic",
+        "pyodbc",
+        "pytest",
+        "sqlalchemy",
+        "uvicorn"
     ]
 }
