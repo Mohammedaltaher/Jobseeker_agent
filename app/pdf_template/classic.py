@@ -1,7 +1,12 @@
 from fpdf import FPDF
 from typing import Dict, Any
+""""
 
-def generate_pdf(data: Dict[str, Any]) -> str:
+A timeless, clean layout with a center-aligned header,minimalist dividers, and clear section separation.
+Ideal for professionals in conservative industries (e.g., finance, law, admin).
+
+"""
+def generate_cv(data: Dict[str, Any]) -> str:
     pdf = FPDF()
     pdf.add_page()
 
@@ -154,6 +159,6 @@ def generate_pdf(data: Dict[str, Any]) -> str:
         pdf.cell(0, 6, txt=", ".join(data['languages']), ln=True)
 
     # Output file
-    output_path = 'static/sample_cv.pdf'
+    output_path = f'static/{data["personal_info"].get("name", "CV")}_classic_cv.pdf'
     pdf.output(output_path)
     return output_path

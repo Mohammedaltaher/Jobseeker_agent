@@ -1,0 +1,42 @@
+{
+  "personal_info": {
+    "name": "",
+    "title": "",
+    "location": "",
+    "email": "",
+    "phone": "",
+    "nationality": ""
+  },
+  "profile": "",
+  "skills": {
+    "category1": [],
+    "category2": [],
+    "category3": []
+  },
+  "professional_experience": [
+    {
+      "role": "",
+      "company": "",
+      "duration": "",
+      "location": "",
+      "tools": "",
+      "description": "",
+      "achievements": [],
+      "projects": [
+        {
+          "name": "",
+          "description": ""
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "",
+      "institution": "",
+      "location": "",
+      "year": ""
+    }
+  ],
+  "languages": []
+}

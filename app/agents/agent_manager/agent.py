@@ -1,13 +1,15 @@
 import uuid
-import os
 from dotenv import load_dotenv
 from google.adk.agents import Agent
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.adk.memory import InMemoryMemoryService
 from google.genai import types
-from .tools import get_agent_instruction
 
+from app.agents.cv_structure_agent.agent import create_cv_structured_formatter_agent
+from app.agents.job_matcher_agent.agent import create_job_matcher_agent
+from .tools import get_agent_instruction
+from app.agents.job_matcher_agent.tools import get_agent_instruction as get_job_matcher_instruction
 # Load environment variables
 load_dotenv('.env')
 
@@ -52,10 +54,11 @@ class JobSeekerAgentManager:
 
     def _create_agent(self):
         return Agent(
-            name="CV_Structured_Formatter",
+            name="agent_manager",
             model=self.model,
-            description="Specialized agent that transforms CV analysis into perfectly structured JSON format",
-            instruction=get_agent_instruction()
+            description="An intelligent agent manager that orchestrates interactions between the CV formatter and job matcher agents, ensuring seamless processing and actionable insights.",
+            instruction= get_agent_instruction(),
+            sub_agents=[create_cv_structured_formatter_agent(),  create_job_matcher_agent()]
         )
 
     async def call_agent(self, query: str) -> str:
