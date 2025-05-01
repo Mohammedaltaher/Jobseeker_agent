@@ -41,10 +41,5 @@ def get_agent_instruction() -> str:
 
     --- Your Output Format ---
 
-    You must return the full, updated CV as valid JSON. Include a final section named `"agent_notes"` that contains:
-    
-    {{
-    "summary_of_changes": [string],
-    "interview_focus_tips": [string]
-    }}
+    You must return the full, updated CV as valid JSON. Include a final section agent_notes.
     """

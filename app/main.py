@@ -40,7 +40,6 @@ async def build_cv(cv: str, job_description: str, template: str):
                 return {"error": "Failed to process the request. Please try again later."}
             
     cleaned_str = json.loads(response.strip('```json').strip('```').strip())
-    
     # Select the appropriate template based on user input
     if template == "vivid_vision":
         pdf_path = vivid_vision.generate_cv(cleaned_str)
@@ -54,7 +53,9 @@ async def build_cv(cv: str, job_description: str, template: str):
         logging.error("Invalid template name provided.")
         return {"error": "Invalid template name provided."}
     
-    return {"result": "success", "pdf_path": pdf_path, "textResult": cleaned_str}
+    cleaned_str["pdfPath"] = pdf_path
+    
+    return cleaned_str
 
 
 @app.get("/download-cv/")

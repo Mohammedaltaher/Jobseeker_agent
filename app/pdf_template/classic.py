@@ -19,12 +19,12 @@ def generate_cv(data: Dict[str, Any]) -> str:
     pdf.set_font('DejaVuSans', '', 16)
 
     # Header with personal info
-    if 'personal_info' in data and data['personal_info']:
-        pdf.cell(200, 10, txt=data['personal_info'].get('name', ''), ln=True, align='C')
+    if 'personalInfo' in data and data['personalInfo']:
+        pdf.cell(200, 10, txt=data['personalInfo'].get('name', ''), ln=True, align='C')
         pdf.set_font("DejaVuSans", 'I', 12)
-        pdf.cell(200, 6, txt=data['personal_info'].get('title', ''), ln=True, align='C')
+        pdf.cell(200, 6, txt=data['personalInfo'].get('title', ''), ln=True, align='C')
         pdf.set_font("DejaVuSans", size=10)
-        pdf.cell(200, 6, txt=f"{data['personal_info'].get('location', '')} | {data['personal_info'].get('email', '')} | {data['personal_info'].get('phone', '')}", ln=True, align='C')
+        pdf.cell(200, 6, txt=f"{data['personalInfo'].get('location', '')} | {data['personalInfo'].get('email', '')} | {data['personalInfo'].get('phone', '')}", ln=True, align='C')
 
     # Add divider line
     pdf.ln(5)
@@ -57,19 +57,16 @@ def generate_cv(data: Dict[str, Any]) -> str:
         pdf.ln(1)
         pdf.set_font("DejaVuSans", size=10)
 
-        print("Skills data:", data['skills'])  # Debugging line
-        for category, skills in data['skills'].items():
-            pdf.set_font("DejaVuSans", 'B', 10)
-            print(f"Category: {category}, Skills: {skills}")  # Debugging line
-            if skills and any(skills):
-                category_width = pdf.get_string_width(f"{category.title()}:") + 2
-                pdf.cell(category_width, 6, txt=f"{category.title()}:", ln=0)
+        if 'categories' in data['skills'] and data['skills']['categories']:
+            for category in data['skills']['categories']:
+                pdf.set_font("DejaVuSans", 'B', 10)
+                pdf.cell(0, 6, txt=category['name'], ln=True)
                 pdf.set_font("DejaVuSans", size=10)
-                pdf.multi_cell(0, 6, txt=", ".join(skills))
+                pdf.multi_cell(0, 6, txt=", ".join(category['skills']))
                 pdf.ln(2)
 
     # Professional Experience
-    if 'professional_experience' in data and data['professional_experience']:
+    if 'professionalExperiences' in data and data['professionalExperiences']:
         pdf.set_font("DejaVuSans", 'B', 12)
         pdf.set_draw_color(200, 200, 200)
         pdf.set_fill_color(200, 200, 200)
@@ -79,7 +76,7 @@ def generate_cv(data: Dict[str, Any]) -> str:
         pdf.ln(1)
         pdf.set_font("DejaVuSans", size=10)
 
-        for exp in data['professional_experience']:
+        for exp in data['professionalExperiences']:
             pdf.set_font("DejaVuSans", 'B', 10)
             pdf.cell(100, 6, txt=f"{exp.get('company', '')}", ln=0)
             pdf.set_font("DejaVuSans", 'I', 10)
@@ -162,6 +159,6 @@ def generate_cv(data: Dict[str, Any]) -> str:
     # Output file
     
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_path = f'static/{data["personal_info"].get("name", "CV")}_classic_cv_{timestamp}.pdf'
+    output_path = f'static/{data["personalInfo"].get("name", "CV")}_classic_cv_{timestamp}.pdf'
     pdf.output(output_path)
     return output_path
