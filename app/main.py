@@ -1,33 +1,14 @@
 import logging
-
-# Configure logging to filter logs and show only errors
-logging.basicConfig(
-    level=logging.ERROR,  # Set the logging level to ERROR
-    format="%(asctime)s - %(levelname)s - %(message)s",  # Customize the log format
-    datefmt="%Y-%m-%d %H:%M:%S",  # Set the date format
-)
-
-logging.getLogger("fastapi").setLevel(logging.CRITICAL)
-logging.getLogger("starlette").setLevel(logging.CRITICAL)
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import json
 from app.agents.agent_manager import agent
-from app.pdf_template  import classic , vivid_vision , mono_slate , slate_lite 
+from app.pdf_template import classic, vivid_vision, mono_slate, slate_lite
 from fastapi.responses import FileResponse
 from datetime import datetime
 
-
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:4200"],  # Replace with your Angular app's URL
-    allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
-)
 @app.post("/build-cv/")
 async def build_cv(cv: str, job_description: str, template: str):
     """
@@ -51,6 +32,7 @@ async def build_cv(cv: str, job_description: str, template: str):
             break
         except Exception as e:
             error_message = str(e)
+            logging.error(f"Error in build_cv: {error_message}")
             if "503" in error_message and attempt < max_retries - 1:
                 print(f"Attempt {attempt + 1} failed: {error_message}. Retrying...")
                 continue
@@ -69,6 +51,7 @@ async def build_cv(cv: str, job_description: str, template: str):
     elif template == "classic":
         pdf_path = classic.generate_cv(cleaned_str)
     else:
+        logging.error("Invalid template name provided.")
         return {"error": "Invalid template name provided."}
     
     return {"result": "success", "pdf_path": pdf_path, "textResult": cleaned_str}

@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  jobseeker_agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_GEMINI_2_0_FLASH=gemini-2.5-flash-preview-04-17
+      - GOOGLE_API_KEY=AIzaSyAjJ9NJFnMGGp2vYhuLDGqNXCJlP-_KXnk
+      - GOOGLE_GENAI_USE_VERTEXAI=FALSE
+    volumes:
+      - .:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000

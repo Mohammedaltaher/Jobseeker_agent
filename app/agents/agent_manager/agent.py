@@ -1,7 +1,3 @@
-import logging
-
-logging.basicConfig(level=logging.error)
-
 import uuid
 from dotenv import load_dotenv
 from google.adk.agents import Agent

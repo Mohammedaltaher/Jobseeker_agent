@@ -7,3 +7,4 @@ pyodbc
 sqlalchemy
 pytest
 litellm
+google-adk
