@@ -1,3 +1,4 @@
+from datetime import datetime
 from fpdf import FPDF
 from typing import Dict, Any
 """"
@@ -137,6 +138,7 @@ def generate_cv(data: Dict[str, Any]) -> str:
 
     # Save
     #return the pdf with the applicant name
-    output_path = f'static/{data["personal_info"].get("name", "CV")}_vivid_vision_cv.pdf'
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_path = f'static/{data["personal_info"].get("name", "CV")}_vivid_vision_cv_{timestamp}.pdf'
     pdf.output(output_path)
     return output_path

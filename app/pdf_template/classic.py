@@ -1,5 +1,6 @@
 from fpdf import FPDF
 from typing import Dict, Any
+from datetime import datetime
 """"
 
 A timeless, clean layout with a center-aligned header,minimalist dividers, and clear section separation.
@@ -159,6 +160,8 @@ def generate_cv(data: Dict[str, Any]) -> str:
         pdf.cell(0, 6, txt=", ".join(data['languages']), ln=True)
 
     # Output file
-    output_path = f'static/{data["personal_info"].get("name", "CV")}_classic_cv.pdf'
+    
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_path = f'static/{data["personal_info"].get("name", "CV")}_classic_cv_{timestamp}.pdf'
     pdf.output(output_path)
     return output_path

@@ -59,9 +59,9 @@ class JobSeekerAgentManager:
         return Agent(
             name="agent_manager",
             model=self.model,
-            description="An intelligent agent manager that orchestrates interactions between the CV formatter and job matcher agents, ensuring seamless processing and actionable insights.",
+            description="The CV Tailoring Agent is an intelligent assistant designed to optimize a candidate’s CV for a specific job description. It automatically analyzes the provided job listing, compares it with the applicant’s current CV (in JSON format), and generates a customized version of the CV that aligns closely with the job requirements.",
             instruction= get_agent_instruction(),
-            sub_agents=[create_cv_structured_formatter_agent(),  create_job_matcher_agent()]
+            # sub_agents=[create_cv_structured_formatter_agent(),  create_job_matcher_agent()]
         )
     async def call_agent(self, query: str) -> str:
         content = types.Content(role='user', parts=[types.Part(text=query)])

@@ -21,6 +21,7 @@ def get_agent_instruction() -> str:
         - Suggest alternative experiences that could demonstrate required competencies
         - Provide phrasing improvements for stronger impact
         - provide score matching between 0-100% with description for the CV with provided job description
+    8. All the above  Enhancement Suggestions you have to edit the cv to match this suggestion this is must.
     --- CV JSON Input Format ---
        {json.dumps(cv_format, indent=2)}
     

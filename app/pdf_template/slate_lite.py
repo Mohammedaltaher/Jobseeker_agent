@@ -1,3 +1,4 @@
+from datetime import datetime
 from fpdf import FPDF
 from typing import Dict, Any
 
@@ -111,7 +112,8 @@ def generate_cv(data: Dict[str, Any]) -> str:
     if langs:
         section("Languages")
         pdf.cell(0, 6, ", ".join([lang if lang else "N/A" for lang in langs]) or "N/A", ln=True)
-
-    output_path = f'static/{data["personal_info"].get("name", "CV")}_slate_lite_cv.pdf'
+        
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_path = f'static/{data["personal_info"].get("name", "CV")}_slate_lite_cv_{timestamp}.pdf'
     pdf.output(output_path)
     return output_path
