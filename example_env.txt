@@ -1,0 +1,3 @@
+# Google API configuration
+GOOGLE_API_KEY=GOOGLE_API_KEY
+MODEL_GEMINI_2_0_FLASH=gemini-2.0-flash

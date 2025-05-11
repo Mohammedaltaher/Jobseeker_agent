@@ -5,6 +5,7 @@ from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.adk.memory import InMemoryMemoryService
 from google.genai import types
+from google.adk.models.lite_llm import LiteLlm
 
 from app.agents.cv_structure_agent.agent import create_cv_structured_formatter_agent
 from app.agents.job_matcher_agent.agent import create_job_matcher_agent
@@ -25,17 +26,19 @@ class JobSeekerAgentManager:
         model: str = None
     ):
 
+        ollama_model = LiteLlm(model="ollama_chat/llama3") 
         self.user_id = user_id
         self.app_name = app_name
         self.agent_name = agent_name
         self.session_id = f"session_{uuid.uuid4()}"
-        self.model = model or getenv("MODEL_GEMINI_2_0_FLASH")
+        # self.model = model or getenv("MODEL_GEMINI_2_0_FLASH")
+        self.model = model or ollama_model
 
         # Session & Memory services
         self.session_service = InMemorySessionService()
         self.memory_service = InMemoryMemoryService()
         self.session = self._create_session()
-
+        
         # Agent setup
         self.agent = self._create_agent()
 
